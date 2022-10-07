@@ -55,7 +55,11 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         if ($request->is('api/*')) {
-            return $this->handlerErrors($e);
+            $response = $this->handlerErrors($e);
+
+            if ($response) {
+                return $response;
+            }
         }
 
         return parent::render($request, $e);
