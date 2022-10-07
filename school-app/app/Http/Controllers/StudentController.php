@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StudentRequest;
+use App\Http\Resources\StudentCollection;
+use App\Http\Resources\StudentResource;
 use App\Models\Student;
 use Illuminate\Http\Request;
 
@@ -10,7 +12,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return Student::get();
+        return new StudentCollection(Student::paginate(2));
     }
 
     public function store(StudentRequest $request)
@@ -20,7 +22,7 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        return Student::findOrFail($id);
+        return new StudentResource(Student::findOrFail($id));
     }
 
     public function update(StudentRequest $request, $id)
